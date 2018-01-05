@@ -117,42 +117,71 @@ export default class DropdownList extends Component {
         return (
             <View>
                 {this.state.makeList()}
-                <ModalDropdown onDropdownWillShow={() => this.onDropdownWillShow1()}
-                    onSelect={(defaultIndex) => this.onSelect1(defaultIndex)}
-                    options={this.state.arrDays}
-                    animated={true}
-                    textStyle={styles.dropDMenuText}
-                    dropdownTextStyle={styles.dropDMenuText}
-                    defaultValue={"Please select a day"} />
-                <ModalDropdown options={this.state.chosenDay}
-                    textStyle={styles.dropDMenuText}
-                    animated={true}
-                    dropdownTextStyle={styles.dropDMenuText}
-                    defaultValue={"Please select a training"} />
-                <ScrollView ref='scrollView' contentContainerStyle={styles.scroller}>
-                    <View style={styles.containerLV}>
-                        <ListView
-                            dataSource={this.state.getInitialState().dataSource}
-                            renderRow={this.renderRow}
-                            renderSectionHeader={this.renderSectionHeader}
-                        />
-                    </View>
-                </ScrollView>
+                <View>
+                    <Text>Variant 1:</Text>
+                    <ScrollView ref='scrollView1' horizontal={true} removeClippedSubviews={false}>
+                        {/*  */}
+                        <Text onPress={this.onDropdownWillShow1.bind(this)} style={styles.textName}>Day</Text>
+                        {this.state.arrDays.map((item, key) => (
+                            <Text key={key} style={{ width: 50, height: 50, backgroundColor: 'skyblue' }} onPress={this.onSelect1.bind(this, key)}> {item} </Text>)
+                        )}
+                    </ScrollView>
+                </View>
+                <View>
+                    <ScrollView ref='scrollView1' horizontal={true} removeClippedSubviews={false}>
+                        <Text onPress={this.onDropdownWillShow1.bind(this)} style={styles.textName}>Training</Text>
+                        {this.state.chosenDay.map((item, key) => (
+                            <Text key={key} style={{ width: 100, height: 50, backgroundColor: 'skyblue' }}> {item} </Text>)
+                        )}
+                    </ScrollView>
+                </View>
+
+                <Text>Variant 2:</Text>
+                <View>
+                    <ModalDropdown onDropdownWillShow={() => this.onDropdownWillShow1()}
+                        onSelect={(defaultIndex) => this.onSelect1(defaultIndex)}
+                        options={this.state.arrDays}
+                        animated={true}
+                        textStyle={styles.dropDMenuText}
+                        dropdownTextStyle={styles.dropDMenuText}
+                        defaultValue={"Please select a day"} />
+                    <ModalDropdown options={this.state.chosenDay}
+                        textStyle={styles.dropDMenuText}
+                        animated={true}
+                        dropdownTextStyle={styles.dropDMenuText}
+                        defaultValue={"Please select a training"} />
+                </View>
+
+                <Text>Variant 3:</Text>
+                <View>
+                    <ScrollView ref='scrollView' contentContainerStyle={styles.scroller}>
+                        <View style={styles.containerLV}>
+                            <ListView
+                                dataSource={this.state.getInitialState().dataSource}
+                                renderRow={this.renderRow}
+                                renderSectionHeader={this.renderSectionHeader}
+                            />
+                        </View>
+                    </ScrollView>
+                </View>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    // variant 2
     dropDMenuText: {
         color: 'red',
         fontSize: 25,
     },
+    //variant 3
     containerLV: {
         //flex: 1,
         padding: 8,
         justifyContent: 'center',
         backgroundColor: '#EAEAEA',
+        height: 400,
     },
     textLVRow: {
         color: 'black',
@@ -168,6 +197,14 @@ const styles = StyleSheet.create({
         //flex: 1,
         //flexDirection: 'row'
     },
+    // variant 1
+    textName: {
+        color: 'black',
+        fontSize: 20,
+        width: 110,
+        height: 50,
+        backgroundColor: 'steelblue'
+    }
 })
 
 AppRegistry.registerComponent('DropdownList', () => DropdownList);
